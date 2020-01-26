@@ -8,6 +8,8 @@ const UserSchema = new Schema(
         password: {type: String, required: true},
         email: {type: String, required: true},
         location: {type: CoordinateSchema, require: true},
+        eventsImAttending: {type: [Schema.Types.ObjectId], default: [], ref: "events"},
+        eventsImHosting: {type: [Schema.Types.ObjectId], default: [], ref: "events"}
     },
     { timestamps : true }
 )
