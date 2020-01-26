@@ -150,7 +150,7 @@ export default function Navbar({ signedIn, signOut, signIn }) {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/2">
+            <Link to="/dashboard">
                 <Button color="primary">
                     <p style={{ color: "#FFFFFF" }}>Dashboard</p>
                 </Button>

@@ -41,7 +41,7 @@ class App extends Component {
           <h1 className="App-title">React Express Starter</h1>
         </header>
         <Customers />
-        <Link to="/2">
+        <Link to="/dashboard">
           <button>
             Text
           </button>
