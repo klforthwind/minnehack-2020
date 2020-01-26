@@ -18,6 +18,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import api from '../api'
 
 
 const useStyles = makeStyles(theme => ({
@@ -39,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
   
-export default function SignInDialog({ close }) {
+export default function SignInDialog({ close, signIn }) {
 
   const classes = useStyles();
 
@@ -65,16 +66,19 @@ export default function SignInDialog({ close }) {
   };
 
   const handleLogInClick = () => {
-    close();
-    getEmailPassword();
+    api.login(getEmailPassword()).then(res => {
+      if (res.success) {
+        signIn(res.user)
+      } else {
+        close();
+      }
+    })
   }
 
   const getEmailPassword = () => {
-    console.log(values.email);
-    console.log(values.password);
     return {
       email: values.email,
-      password: values.password
+      password: values.password,
     }
   }
 
