@@ -37,37 +37,48 @@ export default function App2Func({ currentUser }) {
   const classes = useStyles();
   let {id} = useParams();
 
-  const [data, setData] = React.useState({ name: "", location: { latitude: 0, longitude: 0 } });
+  const [Event, setEvent] = React.useState({ name: "", location: { latitude: 0, longitude: 0 }, volunteers: ['h'] });
   function createData(name, field) {
     return { name, field };
   }
   const [eventInfo, setEventInfo] = React.useState([]);
 
   // let data = {name: ""}
-  if (data.name == "") {
+  if (Event.name == "") {
   api.getEventByID(id).then((res) => {
     if (res.success == true) {
       console.log('something messed up')
     }
 
-    setData(res.data.data);
+    setEvent(res.data.data);
     console.log(res.data.data)
     let user = {};
     api.getUserByID(res.data.data.creator).then((res) => {
       
       user = res.data.user
-      console.log(user)
       setEventInfo([
         createData('Host', user.name),
         createData('Location', user.location.name || "Somewhere"),
-        createData('Time', data.date || "Sometime")
+        createData('Time', Event.date || "Sometime")
       ]
       )
+      
     })
 
   });
   }
+  function applyToEvent() {
 
+    console.log("hi")
+    if (currentUser._id != null) {
+      api.addVolunteerToEvent(id, {volunteer: currentUser._id}).then((res) => {
+        console.log(res)
+        // refresh
+        window.location.reload();
+      })
+    }
+
+  }
   return (
     <Container maxWidth="md">
       <Grid container direction="row" spacing={1}>
@@ -75,11 +86,11 @@ export default function App2Func({ currentUser }) {
           <Grid item xs={12}>
             <Card style={{padding: 20}}>
               <Typography gutterBottom variant="h5" component="h2" >
-                { data.name}}
+                {Event.name}
               </Typography>
               <Divider variant="middle" style={{margin: 20}}/>
               <Typography variant="body2" color="textSecondary" component="p" align="left">
-                {data.info}
+                {Event.info}
               </Typography>
             </Card>
           </Grid>
@@ -109,18 +120,18 @@ export default function App2Func({ currentUser }) {
                 <Grid container>
                   <Grid item xs={12}>
                     <Typography>
-                      {data.current_vol_count}/{data.target_vol_count}
+                      {Event.volunteers.length}/{Event.target_vol_count}
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
-                  <LinearProgress variant="determinate" value={data.current_vol_count/data.target_vol_count * 100} color="primary" />
+                  <LinearProgress variant="determinate" value={Event.volunteers.length/Event.target_vol_count * 100} color="primary" />
                   </Grid>
                 
                 </Grid>
                   
               </Grid>
                 <Grid item xs={12}>
-                  <Button fullWidth variant="contained" color="primary">Apply To Event</Button>
+                  <Button fullWidth variant="contained" color="primary" onClick={applyToEvent}>Apply To Event</Button>
                 </Grid>
 
               </Grid>
@@ -129,11 +140,9 @@ export default function App2Func({ currentUser }) {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper style={{padding: "10%", width: "80%"}}>
-              {console.log(currentUser)}
-              { console.log({ lat: data.location.latitude, lng: data.location.longitude })}
-              {/* <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: data.location.latitude, lng: data.location.lng }}/> */}
-              <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: data.location.latitude, lng: data.location.longitude }}/>
+            <Paper style={{padding: "10%", width: "80%" }}>
+              {/* <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: Event.location.latitude, lng: Event.location.lng }}/> */}
+              <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: Event.location.latitude, lng: Event.location.longitude }}/>
             </Paper>
           </Grid>
         </Grid>
