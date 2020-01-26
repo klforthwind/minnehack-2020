@@ -67,7 +67,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Navbar({ signedIn, signOut, signIn }) {
+export default function Navbar({ signedIn, signOut, signIn, signUp }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -134,7 +134,7 @@ export default function Navbar({ signedIn, signOut, signIn }) {
   return (
     <div className={classes.grow}>
       { signInDialogOpen ? <SignInDialog close={hideSignInDialog} signIn={signIn} /> : null }
-      { signUpDialogOpen ? <SignUpDialog close={hideSignUpDialog} /> : null }
+      { signUpDialogOpen ? <SignUpDialog close={hideSignUpDialog} signUp={signUp} /> : null }
       <AppBar position="static">
         <Toolbar>
           <IconButton

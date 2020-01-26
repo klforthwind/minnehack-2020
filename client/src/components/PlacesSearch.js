@@ -34,8 +34,7 @@ export default class PlacesSearch extends React.Component {
       .then(latLng => {
         console.log('Success');
         this.setState({ location: latLng });
-        console.log(this.state.location);
-        console.log(this.state.textName);
+        this.props.setLatLngName(this.state.location.lat, this.state.location.lng, this.state.textName);
       })
       .catch(error => console.error('Error', error));
   };

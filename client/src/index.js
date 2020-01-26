@@ -14,24 +14,29 @@ class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          uid: '',
-          loc: '',
-          username: '',
-          email: '',
+          user: {},
           signedIn: false,
         }
       }
     
       signOut = () => {
         this.setState({ signedIn: false });
+        this.setState({ setState: {} });
         console.log(this.state.signedIn);
         console.log('sign out');
       }
     
-      signIn = () => {
+      signIn = (user) => {
         // Sign in handler
+        this.setState({ signedIn: true });
+        this.setState({ user: user });
+        console.log('sign in');
+      }
+
+      signUp = (user) => {
         this.setState({ signedIn: true })
-        console.log('sign in')
+        // Sign up with API
+        this.setState({ user: user });
       }
     render() {
 
@@ -39,7 +44,7 @@ class Index extends React.Component {
         <div className="App">
 
         <Router>
-        <Navbar signedIn={this.state.signedIn} signOut={this.signOut} signIn={this.signIn} />
+        <Navbar signedIn={this.state.signedIn} signOut={this.signOut} signIn={this.signIn} signUp={this.signUp} />
             <div>
                 <Route exact path="/" component={App} />
                 <Route path="/dashboard" component={App2} />

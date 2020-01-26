@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     }
   }));
   
-export default function SignUpDialog({ close }) {
+export default function SignUpDialog({ close, signUp }) {
 
   const [gmapsLoaded, setGmapsLoaded] = React.useState(false);
 
@@ -67,8 +67,13 @@ export default function SignUpDialog({ close }) {
     showPassword: false,
     email: '',
     username: '',
-    location: ''
+    location: '',
+    lat: 0,
+    lng: 0,
+    name: ''
   });
+
+  const [lat, setLat] = React.useState(0);
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
@@ -84,18 +89,28 @@ export default function SignUpDialog({ close }) {
 
   const handleSignUpClick = () => {
     close();
-    getNewUserData();
+    let data = getNewUserData();
+    console.log(data);
+    // signUp(user);
+  }
+
+  const setLatLngName = (latitude, longitude, name) => {
+    console.log('set lat lng name')
+    console.log(latitude);
+    setValues({ ...values, lat: latitude, lng: longitude, name: name })
   }
 
 
   const getNewUserData = () => {
-    console.log(values.email);
-    console.log(values.password);
-    console.log(values.username);
+    console.log('get new user data')
+    console.log(values);
     return {
       email: values.email,
       password: values.password,
-      username: values.username
+      username: values.username,
+      lat: values.lat,
+      lng: values.lng,
+      name: values.name
     }
   }
 
@@ -129,7 +144,7 @@ export default function SignUpDialog({ close }) {
               onChange={handleChange('email')}
             />
             {/* Places------------------------------------------------------------------------------ */}
-            <PlacesSearch />
+            <PlacesSearch setLatLngName={setLatLngName} />
             {/* Places------------------------------------------------------------------------------ */}
           </FormControl>
           <FormControl className={clsx(classes.margin, classes.textField)} >
