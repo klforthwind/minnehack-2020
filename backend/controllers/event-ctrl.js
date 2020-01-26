@@ -73,7 +73,17 @@ deleteEvent = async (req, res) => {
 }
 
 getEvents = async (req, res) => {
-
+    await Event.find({}, (err, movies) => {
+        if (err) {
+            return res.status(400).json({ success : false, error: err})
+        }
+        if (!events.length) {
+            return res
+                .status(404)
+                .json({ success : false, error : 'Event not found'})
+        }
+        return res.status(200).json({ success : true, data : events})
+    }).catch(err => console.log(err))
 }
 
 getEventByID = async (req, res) => {
