@@ -20,6 +20,7 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import Navbar from './components/Navbar';
+import MapComponent from './components/MapComponent';
 const useStyles = makeStyles(theme => ({ }));
 
 function createData(name, field) {
@@ -32,12 +33,15 @@ const event_info = [
   createData('Time', '7:00AM  7/9/2019'),
 ];
 
-export default function App2Func() {
+export default function App2Func({ currentUser }) {
   const classes = useStyles();
   let {id} = useParams();
-  console.log(id);
 
-  const [data, setData] = React.useState({ name: "" });
+  const [data, setData] = React.useState({ name: "", location: { latitude: 0, longitude: 0 } });
+  function createData(name, field) {
+    return { name, field };
+  }
+  const [eventInfo, setEventInfo] = React.useState([]);
 
   // let data = {name: ""}
   if (data.name == "") {
@@ -45,35 +49,47 @@ export default function App2Func() {
     if (res.success == true) {
       console.log('something messed up')
     }
-    console.log(res.data.data)
-    
+
     setData(res.data.data);
+    console.log(res.data.data)
+    let user = {};
+    api.getUserByID(res.data.data.creator).then((res) => {
+      
+      user = res.data.user
+      console.log(user)
+      setEventInfo([
+        createData('Host', user.name),
+        createData('Location', user.location.name || "Somewhere"),
+        createData('Time', data.date || "Sometime")
+      ]
+      )
+    })
+
   });
   }
 
   return (
     <Container maxWidth="md">
-      <Grid container direction="row">
-        <Grid item container direction="column">
-          <Grid item xs={6}>
-            <Card variant="outlined" style={{padding: 20}}>
-              <Typography gutterBottom variant="h3" component="h2" >
-                {data.name}
+      <Grid container direction="row" spacing={1}>
+        <Grid container item xs={7}>
+          <Grid item xs={12}>
+            <Card style={{padding: 20}}>
+              <Typography gutterBottom variant="h5" component="h2" >
+                { data.name}}
               </Typography>
               <Divider variant="middle" style={{margin: 20}}/>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="textSecondary" component="p" align="left">
                 {data.info}
               </Typography>
             </Card>
           </Grid>
-
         </Grid>
-        <Grid  item container direction="column">
-          <Grid item xs={6}>
+        <Grid container item xs={5} justify="flex-start">
+          <Grid item xs={12}>
           <TableContainer component={ Paper }>
                 <Table className={ classes.table } size="small" aria-label="simple table">
                   <TableBody>
-                    {event_info.map(row => (
+                    {eventInfo.map(row => (
                       <TableRow key={ row.name }>
                         <TableCell component="th" scope="row">
                           {row.name}
@@ -84,6 +100,41 @@ export default function App2Func() {
                   </TableBody>
                 </Table>
               </TableContainer>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Paper style={{padding: "20px"}}>
+              <Grid container alignItems="center" spacing={3}>
+              <Grid item xs={12}>
+                <Grid container>
+                  <Grid item xs={12}>
+                    <Typography>
+                      {data.current_vol_count}/{data.target_vol_count}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                  <LinearProgress variant="determinate" value={data.current_vol_count/data.target_vol_count * 100} color="primary" />
+                  </Grid>
+                
+                </Grid>
+                  
+              </Grid>
+                <Grid item xs={12}>
+                  <Button fullWidth variant="contained" color="primary">Apply To Event</Button>
+                </Grid>
+
+              </Grid>
+              
+              
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper style={{padding: "10%", width: "80%"}}>
+              {console.log(currentUser)}
+              { console.log({ lat: data.location.latitude, lng: data.location.longitude })}
+              {/* <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: data.location.latitude, lng: data.location.lng }}/> */}
+              <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: data.location.latitude, lng: data.location.longitude }}/>
+            </Paper>
           </Grid>
         </Grid>
       </Grid>

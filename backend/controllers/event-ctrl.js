@@ -50,7 +50,9 @@ updateEvent = async (req, res) => {
         event.name = body.name
         event.location = body.location
         event.info = body.info
-        event.body = body.date
+        event.date = body.date
+        event.target_vol_count = body.target_vol_count
+        event.current_vol_count = body.current_vol_count
         event
             .save()
             .then(() => {

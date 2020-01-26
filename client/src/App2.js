@@ -6,6 +6,7 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import MapComponent from './components/MapComponent';
 
 
 const useStyles = makeStyles(theme => ({
@@ -47,7 +48,8 @@ export default function App2Func() {
             InputLabelProps={{
               shrink: true,
             }}
-          />          
+          />     
+          <MapComponent />     
         </div>
 
       </div>
