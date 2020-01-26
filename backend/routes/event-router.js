@@ -8,5 +8,7 @@ router.get('/events', EventCtrl.getEvents)
 router.get('/event/:id', EventCtrl.getEventByID)
 router.get('/event/creator/:owner', EventCtrl.getEventsByOwner)
 router.get('/event/volunteer/:volunteer', EventCtrl.getEventsByVolunteer)
+router.put('/add_volunteer/:id', EventCtrl.addVolunteerToEvent)
+router.put('/remove_volunteer/:id', EventCtrl.removeVolunteerFromEvent)
 
 module.exports = router

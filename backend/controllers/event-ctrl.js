@@ -6,7 +6,7 @@ createEvent = (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide name, location, info'
+            error: 'You must provide name, location, info, and date'
         })
     }
 
@@ -50,6 +50,7 @@ updateEvent = async (req, res) => {
         event.name = body.name
         event.location = body.location
         event.info = body.info
+        event.body = body.date
         event
             .save()
             .then(() => {
@@ -69,7 +70,18 @@ updateEvent = async (req, res) => {
 }
 
 deleteEvent = async (req, res) => {
-    // await Event.findOneAndDelete({ id: req.params.id})
+    await Event.findOneAndDelete({ id: req.params.id}, (err, event) => {
+        if (err) {
+            return res.status(400).json({ success : false, error: err})
+        }
+
+        if (!event) {
+            return res
+                .status(404)
+                .json({ success: false, error: 'Event not found' })
+        }
+        return res.status(200).json({ success : true, data : events})
+    }).catch(err => console.log(err))
 }
 
 getEvents = async (req, res) => {
@@ -125,6 +137,79 @@ getEventsByVolunteer = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+addVolunteerToEvent = async (req, res) => {
+    const body = req.body
+    
+    if (!body) {
+        return res.status(400).json({
+            success : false,
+            error: 'Body must have a volunteer to add'
+        })
+    }
+
+    await Event.findOne({_id : req.params.id}, (err, event) => {
+        if (err) {
+            return res.status(404).json({
+                err,
+                message: 'Event not found!'
+            })
+        }
+
+        if (!event) {
+            return res
+                    .status(404)
+                    .json({ success : false, error : "Event not found!"})
+        }
+        event.volunteers.push(body.volunteer)
+        return res.status(200).json({ success : true, data: event})
+    }).catch(err => console.log(err))
+}
+
+removeVolunteerFromEvent = async (req, res) => {
+    const body = req.body
+    
+    if (!body) {
+        return res.status(400).json({
+            success : false,
+            error: 'Body must have volunteer to remove'
+        })
+    }
+
+    await Event.findOne({_id : req.params.id}, (err, event) => {
+        if (err) {
+            return res.status(404).json({
+                err,
+                message: 'Event not found!'
+            })
+        }
+
+        if (!event) {
+            return res
+                    .status(404)
+                    .json({ success : false, error : "Event not found!"})
+        }
+        event.volunteers.filter((elem) => {
+            return body.volunteer !== elem._id;
+        })
+
+        event
+            .save()
+            .then(() => {
+                return res.status(200).json({
+                    success: true,
+                    _id: Event._id,
+                    message: "Event updated!"
+                })
+            })
+            .catch(error => {
+                return res.status(404).json({
+                    error,
+                    message: 'Event not updated!'
+                })
+            })
+    }).catch(err => console.log(err))
+}
+
 module.exports = {
     createEvent,
     updateEvent,
@@ -132,5 +217,7 @@ module.exports = {
     getEvents,
     getEventByID,
     getEventsByOwner,
-    getEventsByVolunteer
+    getEventsByVolunteer,
+    addVolunteerToEvent,
+    removeVolunteerFromEvent
 }
