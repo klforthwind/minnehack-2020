@@ -67,9 +67,8 @@ export default function SignInDialog({ close, signIn }) {
 
   const handleLogInClick = () => {
     api.login(getEmailPassword()).then(res => {
-      if (res.success) {
-        signIn(res.user)
-      } else {
+      if (res.data.success) {
+        signIn(res.data.user)
         close();
       }
     })
