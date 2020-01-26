@@ -13,7 +13,7 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({ }));
 
-export default function InsetList() {
+export default function InsetList({ signedIn }) {
     const classes = useStyles();
   
     return (
