@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const CoordinateSchema = require('./coordinate-model')
-const EventSchema = require('./event-model')
+const CoordinateSchema = require('./coordinate-model').CoordinateSchema
+const EventSchema = require('./event-model').EventSchema
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema(

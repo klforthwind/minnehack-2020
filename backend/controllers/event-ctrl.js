@@ -1,4 +1,4 @@
-const Event = require('../models/event-model')
+const Event = require('../models/event-model').EventModel
 
 createEvent = (req, res) => {
     const body = req.body
@@ -17,9 +17,7 @@ createEvent = (req, res) => {
         .then(() => {
             return res.status(201).json({
                 success : true,
-                name : event.name,
-                location : event.location,
-                info : event.info,
+                event,
                 message: "Event created!"
             })
         })
