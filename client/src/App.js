@@ -8,10 +8,34 @@ import Navbar from './components/Navbar';
 
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      uid: '',
+      loc: '',
+      username: '',
+      email: '',
+      signedIn: false,
+    }
+  }
+
+  signOut = () => {
+    this.setState({ signedIn: false });
+    console.log(this.state.signedIn);
+    console.log('sign out');
+  }
+
+  signIn = () => {
+    // Sign in handler
+    this.setState({ signedIn: true })
+    console.log('sign in')
+  }
+
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <Navbar signedIn={this.state.signedIn} signOut={this.signOut} signIn={this.signIn} />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">React Express Starter</h1>

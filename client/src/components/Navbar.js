@@ -15,7 +15,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import SignInDialog from './SignInDialog';
+import SignUpDialog from './SignUpDialog';
 
 
 const useStyles = makeStyles(theme => ({
@@ -65,9 +67,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar({ signedIn, signOut, signIn }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const [signInDialogOpen, setSignInDialogOpen] = React.useState(false);
+  const [signUpDialogOpen, setSignUpDialogOpen] = React.useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -78,6 +83,27 @@ export default function Navbar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+  const handleSignOutClick = () => {
+    signOut();
+    setAnchorEl(null);
+  }
+
+  const handleSignInClick = () => {
+    setSignInDialogOpen(true);
+    setAnchorEl(null);
+  }
+  const hideSignInDialog = () => {
+    setSignInDialogOpen(false);
+  }
+
+  const handleSignUpClick = () => {
+    setSignUpDialogOpen(true);
+    setAnchorEl(null);
+  }
+  const hideSignUpDialog = () => {
+    setSignUpDialogOpen(false);
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -90,13 +116,25 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem style={{ width: 100 }} onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem style={{ width: 100 }} onClick={handleMenuClose}>Sign Out</MenuItem>
+      { signedIn ? 
+        <div>
+        <Link to="/profile" style={{ textDecoration: 'none', color: '#000000' }}>
+          <MenuItem style={{ width: 100 }} onClick={handleMenuClose}>Profile</MenuItem>
+        </Link>
+        <MenuItem style={{ width: 100 }} onClick={handleSignOutClick}>Sign Out</MenuItem>
+        </div> :
+        <div>
+          <MenuItem style={{ width: 100 }} onClick={handleSignInClick}>Log In</MenuItem>
+          <MenuItem style={{ width: 100 }} onClick={handleSignUpClick}>Sign Up</MenuItem>
+        </div>
+      }
     </Menu>
   );
   
   return (
     <div className={classes.grow}>
+      { signInDialogOpen ? <SignInDialog close={hideSignInDialog} /> : null }
+      { signUpDialogOpen ? <SignUpDialog close={hideSignUpDialog} /> : null }
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -119,6 +157,10 @@ export default function Navbar() {
             </Link>
             <Button color="primary">
                 <p style={{ color: "#FFFFFF" }}>Explore</p>
+                {/* TODO: WTF */}
+                {/* <div style={makeStyles.searchIcon}>
+                    <SearchIcon />
+                </div> */}
             </Button>
             <IconButton
               edge="end"
