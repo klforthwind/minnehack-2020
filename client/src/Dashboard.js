@@ -101,7 +101,7 @@ export default class InsetList extends Component {
     render() {
         const {redirect} = this.state;
 
-        if(redirect){return <Redirect to="/dashboard" />}
+        if(redirect){return <Redirect to="/" />}
 
         return (
             <Container maxWidth = "md">
