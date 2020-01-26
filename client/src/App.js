@@ -12,10 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      uid: '',
-      loc: '',
-      username: '',
-      email: '',
+      user: {},
       signedIn: false,
     }
   }
@@ -26,10 +23,11 @@ class App extends Component {
     console.log('sign out');
   }
 
-  signIn = () => {
+  signIn = (user) => {
     // Sign in handler
-    this.setState({ signedIn: true })
-    console.log('sign in')
+    this.setState({ signedIn: true });
+    this.setState({ user: user });
+    console.log('sign in');
   }
 
   render() {

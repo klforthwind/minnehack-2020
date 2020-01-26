@@ -18,8 +18,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-
+import PlacesSearch from './PlacesSearch';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -88,14 +87,6 @@ export default function SignUpDialog({ close }) {
     getNewUserData();
   }
 
-  // location
-  const handleSelect = address => {
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
-      .catch(error => console.error('Error', error));
-  };
-
 
   const getNewUserData = () => {
     console.log(values.email);
@@ -138,7 +129,7 @@ export default function SignUpDialog({ close }) {
               onChange={handleChange('email')}
             />
             {/* Places------------------------------------------------------------------------------ */}
-            
+            <PlacesSearch />
             {/* Places------------------------------------------------------------------------------ */}
           </FormControl>
           <FormControl className={clsx(classes.margin, classes.textField)} >

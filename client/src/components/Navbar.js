@@ -133,7 +133,7 @@ export default function Navbar({ signedIn, signOut, signIn }) {
   
   return (
     <div className={classes.grow}>
-      { signInDialogOpen ? <SignInDialog close={hideSignInDialog} /> : null }
+      { signInDialogOpen ? <SignInDialog close={hideSignInDialog} signIn={signIn} /> : null }
       { signUpDialogOpen ? <SignUpDialog close={hideSignUpDialog} /> : null }
       <AppBar position="static">
         <Toolbar>
