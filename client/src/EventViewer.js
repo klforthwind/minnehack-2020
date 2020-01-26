@@ -53,23 +53,22 @@ export default function App2Func() {
 
   return (
     <Container maxWidth="md">
-      <Grid container direction="row">
-        <Grid item container direction="column">
-          <Grid item xs={6}>
-            <Card variant="outlined" style={{padding: 20}}>
-              <Typography gutterBottom variant="h3" component="h2" >
+      <Grid container direction="row" spacing={1}>
+        <Grid container item xs={7}>
+          <Grid item >
+            <Card style={{padding: 20}}>
+              <Typography gutterBottom variant="h5" component="h2" >
                 {data.name}
               </Typography>
               <Divider variant="middle" style={{margin: 20}}/>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="textSecondary" component="p" align="left">
                 {data.info}
               </Typography>
             </Card>
           </Grid>
-
         </Grid>
-        <Grid  item container direction="column">
-          <Grid item xs={6}>
+        <Grid container item xs={5} justify="flex-start">
+          <Grid item>
           <TableContainer component={ Paper }>
                 <Table className={ classes.table } size="small" aria-label="simple table">
                   <TableBody>
@@ -84,6 +83,36 @@ export default function App2Func() {
                   </TableBody>
                 </Table>
               </TableContainer>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Paper style={{padding: "20px"}}>
+              <Grid container alignItems="center" spacing={3}>
+              <Grid item xs={12}>
+                <Grid container>
+                  <Grid item xs={12}>
+                    <Typography>
+                      {data.current_vol_count}/{data.target_vol_count}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                  <LinearProgress variant="determinate" value={data.current_vol_count/data.target_vol_count} color="primary" />
+                  </Grid>
+                
+                </Grid>
+                  
+              </Grid>
+                <Grid item xs={12}>
+                  <Button fullWidth variant="contained" color="primary">Apply To Event</Button>
+                </Grid>
+
+              </Grid>
+              
+              
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper style={{padding: "10%", width: "80%", height: "100px"}} />
           </Grid>
         </Grid>
       </Grid>
