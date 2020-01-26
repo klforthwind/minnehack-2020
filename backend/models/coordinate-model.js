@@ -9,4 +9,4 @@ const CoordinateSchema = new Schema(
     { timestamps : false}
 )
 
-module.exports = mongoose.model('coordinates', CoordinateSchema)
+module.exports = {CoordinateModel: mongoose.model('coordinates', CoordinateSchema), CoordinateSchema}

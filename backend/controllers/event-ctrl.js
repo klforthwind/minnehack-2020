@@ -13,13 +13,14 @@ createEvent = (req, res) => {
     const name = body.name
     const location = body.location
     const info = body.info
-    console.log(name)
-    console.log(location)
-    console.log(body)
 
-    return res.status(201).json({
-        success : true
-    })
+    if (name === "Hello") {
+        return res.status(201).json({
+            success : true
+        })
+
+    }
+
 }
 
 updateEvent = async (req, res) => {
