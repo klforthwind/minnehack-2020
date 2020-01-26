@@ -1,4 +1,4 @@
-const UserModel = require('../models/user-model')
+const UserModel = require('../models/user-model').UserModel
 
 createUser = (req, res) => {
     if (!req.body) {
