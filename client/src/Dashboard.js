@@ -9,7 +9,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Link, BrowserRouter as Router, Redirect } from 'react-router-dom'
 import api from '../src/api'
 
 const useStyles = makeStyles(theme => ({ }));
@@ -19,6 +19,7 @@ export default class InsetList extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            redirect: false,
             attending: [],
             a_items: [],
             hosting: [],
@@ -27,6 +28,11 @@ export default class InsetList extends Component {
     }
 
     async componentDidMount () {
+
+        if (!this.props.signedIn) {
+            this.setState({redirect: true})
+        }
+      
 
         api.getEventsByCreator(this.props.currentUser._id).then(res => {
             this.setState({
@@ -93,6 +99,9 @@ export default class InsetList extends Component {
 
 
     render() {
+        const {redirect} = this.state;
+
+        if(redirect){return <Redirect to="/dashboard" />}
 
         return (
             <Container maxWidth = "md">
