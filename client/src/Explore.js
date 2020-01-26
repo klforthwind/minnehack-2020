@@ -1,43 +1,55 @@
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import React, { Component } from 'react'
-import VirtualizedList from '../src/components/VirtualizedList'
 import api from '../src/api'
 
 class Explore extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            events: []
+            events: [],
+            creator: "",
+            item: []
         }
     }
 
     async componentDidMount () {
 
         api.getEvents().then(res => {
-            console.log(res.data)
             this.setState({
-                events: res.data.data
+                events: res.data.data,
             })
         })
-    }
 
-    render() {
         const items = []
-        console.log(this.state.events)
+        const events = this.state.events
 
-        for (let i = 0; i < this.state.events.length; i++) {
-            console.log(this.state.events[i])
-            console.log("awdadawd")
-            items.push(<li key={i}>{this.state.events[i].name}</li>)
+        for (let i = 0; i < events.length; i++) {
+            let event = events[i]
+            api.getUserByID(event.creator).then(res => {
+                this.setState({creator : res.data.user.name})
+            })
+            items.push(
+                <ListItem button key={i}>
+                    <ListItemText style={{paddingLeft:100}} primary={`${event.name}`} />
+                    <ListItemText primary={`${event.location.name}`} />
+                    <ListItemText primary={`${event.target_vol_count}`} />
+                    <ListItemText primary={`${event.date}`} />
+                    <ListItemText primary={`${this.state.creator}`} />
+                </ListItem>)
         }
-      
-        return (
-            <div>
-                {items}
-                <VirtualizedList />
-            </div>
+        this.setState({item : items})
+        console.log(this.state.creator)
 
+    }
+    
+    render() {
+
+        
+        return (
+            <div>{this.state.item}</div>
         )
     }
 }
 
-export default Explore
+export default Explore;
