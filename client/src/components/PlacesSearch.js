@@ -23,8 +23,9 @@ export default class PlacesSearch extends React.Component {
   //   console.log('here');
   // }
 
-  handleTextChange() {
-
+  handleTextChange = () => {
+    console.log('here')
+    // console.log(e.target.value)
   }
 
   handleSelect = address => {
