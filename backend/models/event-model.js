@@ -6,8 +6,7 @@ const EventSchema = new Schema(
     {
         name : {type: String, required: true},
         location : {type: CoordinateSchema, required: true},
-        info : {type: String, required: true},
-        id : {type: Number, required: true}
+        info : {type: String, required: true}
     },
     { timestamps : true}
 )

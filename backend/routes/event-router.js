@@ -4,5 +4,6 @@ var router = express.Router()
 
 // router.post('/login', EventCtrl.login) 
 router.post('/create', EventCtrl.createEvent) 
+router.put('/update/:id', EventCtrl.updateEvent)
 
 module.exports = router
