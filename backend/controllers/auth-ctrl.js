@@ -2,11 +2,15 @@ const UserModel = require('../models/user-model')
 
 createUser = (req, res) => {
     if (!req.body) {
-        return res.status(400).json({ error: "no body"})
+        return res.status(400).json({
+            success: false,
+            message: "no body"
+        })
     }
 
     // try and validate a new model
-    const user = new UserModel(req.body).on("error", () => res.status(400).json({
+    const user = new UserModel(req.body)
+    user.on("error", () => res.status(400).json({
         success: false,
         message: "failed to create user"
     }))
@@ -22,16 +26,26 @@ createUser = (req, res) => {
     }))
 }
 deleteUser = (req, res) => {
-    
+
 }
 updateUser = (req, res) => {
     
 }
-getUsers = (req, res) => {
-    
+getUsers = async (req, res) => {
+    UserModel.find({}, (err, users) => {
+        if (err) {
+            return res.status(400).json({success: false, err })
+        }
+        return res.status(200).json({success: true, users})
+    })
 }
-getUserByID = (req, res) => {
-    
+getUserByID = async (req, res) => {
+    UserModel.findById(req.params.id, (err, user) => {
+        if (err) {
+            return res.status(400).json({success: false, err })
+        }
+        return res.status(200).json({success: true, user})
+    })
 }
 login = (req, res) => {
     

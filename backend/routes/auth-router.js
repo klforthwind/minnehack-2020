@@ -6,6 +6,7 @@ AuthRouter.post('/login', AuthCtrl.login)
 // define the about route
 AuthRouter.post('/create', AuthCtrl.createUser)
 AuthRouter.get('/user/:id', AuthCtrl.getUserByID)
+//AuthRouter.delete('/user/:id', AuthCtrl.deleteUser)
 AuthRouter.get('/users', AuthCtrl.getUsers)
 
 module.exports = AuthRouter
