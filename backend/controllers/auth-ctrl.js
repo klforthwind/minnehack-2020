@@ -1,7 +1,6 @@
 const User = require('../models/user-model')
 
 createUser = (req, res) => {
-    if (req.)
 }
 deleteUser = (req, res) => {
     
