@@ -10,17 +10,29 @@ createEvent = (req, res) => {
         })
     }
 
-    const name = body.name
-    const location = body.location
-    const info = body.info
+    const event = new Event(body)
 
-    if (name === "Hello") {
-        return res.status(201).json({
-            success : true
-        })
-
+    if (!event) {
+        return res.status(400).json({ success:false, error: err})
     }
 
+    event
+        .save()
+        .then(() => {
+            return res.status(201).json({
+                success : true,
+                name : event.name,
+                location : event.location,
+                info : event.info,
+                message: "Event created!"
+            })
+        })
+        .catch(err => {
+            return res.status(400).json({
+                error: err,
+                message: "Event not created!"
+            })
+        })
 }
 
 updateEvent = async (req, res) => {
