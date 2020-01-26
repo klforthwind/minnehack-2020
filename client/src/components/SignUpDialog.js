@@ -19,6 +19,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import PlacesSearch from './PlacesSearch';
+import api from '../api'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -46,15 +47,15 @@ export default function SignUpDialog({ close, signUp }) {
 
   const [gmapsLoaded, setGmapsLoaded] = React.useState(false);
 
-  const initMap = () => {
-    setGmapsLoaded(true);
-  }
+  // const initMap = () => {
+  //   setGmapsLoaded(true);
+  // }
 
   // if (!gmapsLoaded) {
-    window.initMap = initMap;
-    const gmapScriptEl = document.createElement(`script`);
-    gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCeE94p1J7ThaGEnRWHH626jSs72B-vWes&libraries=places&callback=initMap`;
-    document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl);
+  //   window.initMap = initMap;
+  //   const gmapScriptEl = document.createElement(`script`);
+  //   gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCeE94p1J7ThaGEnRWHH626jSs72B-vWes&libraries=places&callback=initMap`;
+  //   document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl);
   // }
 
   const classes = useStyles();
@@ -73,8 +74,6 @@ export default function SignUpDialog({ close, signUp }) {
     name: ''
   });
 
-  const [lat, setLat] = React.useState(0);
-
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -88,10 +87,12 @@ export default function SignUpDialog({ close, signUp }) {
   };
 
   const handleSignUpClick = () => {
-    close();
-    let data = getNewUserData();
-    console.log(data);
-    // signUp(user);
+    api.createUser(getNewUserData()).then(res => {
+      if (res.status === 200) {
+        signUp(res.data);
+        close();
+      }
+    })
   }
 
   const setLatLngName = (latitude, longitude, name) => {
@@ -102,15 +103,15 @@ export default function SignUpDialog({ close, signUp }) {
 
 
   const getNewUserData = () => {
-    console.log('get new user data')
-    console.log(values);
     return {
       email: values.email,
       password: values.password,
-      username: values.username,
-      lat: values.lat,
-      lng: values.lng,
-      name: values.name
+      name: values.username,
+      location: {
+        latitude: values.lat,
+        longitude: values.lng,
+        name: values.name
+      }
     }
   }
 
