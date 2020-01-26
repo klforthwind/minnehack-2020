@@ -14,8 +14,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-
-
+import { Route, Link, BrowserRouter as Router, useParams } from 'react-router-dom'
+import api from './api/index'
+import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
 const useStyles = makeStyles(theme => ({ }));
 
 function createData(name, field) {
@@ -30,6 +32,22 @@ const event_info = [
 
 export default function App2Func() {
   const classes = useStyles();
+  let {id} = useParams();
+  console.log(id);
+
+  const [data, setData] = React.useState({ name: "" });
+
+  // let data = {name: ""}
+  if (data.name == "") {
+  api.getEventByID(id).then((res) => {
+    if (res.success == true) {
+      console.log('something messed up')
+    }
+    console.log(res.data.data)
+    
+    setData(res.data.data);
+  });
+  }
 
   return (
     <Container maxWidth="md">
@@ -38,18 +56,23 @@ export default function App2Func() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant = "h4">
-                Need Help Learning JS
+                {data.name}
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Paper height={500} elevation={2}>
-                I need help learning J.S. It confuses me deeply, and the only thing coming from my attempts to learn it is frustration. I need help learning J.S. It confuses me deeply, and the only thing coming from my attempts to learn it is frustration.
-              </Paper>
+              <Box>
+              <Card>
+                <Typography>
+                  {data.info}
+                </Typography>
+              </Card>         
+              </Box>
+
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2}>
                 <Grid item xs={5}>
-                  <Button variant="contained" color="primary" fullWidth='true'>
+                  <Button variant="contained" color="primary" fullWidth>
                     Register
                   </Button>
                 </Grid>

@@ -5,7 +5,7 @@ import App from './App';
 import App2 from './App2';
 import registerServiceWorker from './registerServiceWorker';
 import { Route, Link, BrowserRouter as Router,Switch } from 'react-router-dom'
-import Event from './components/Event';
+import Event from './EventViewer';
 
 registerServiceWorker();
 
