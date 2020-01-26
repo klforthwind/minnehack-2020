@@ -36,14 +36,9 @@ class App extends Component {
         {/* <Navbar signedIn={this.state.signedIn} signOut={this.signOut} signIn={this.signIn} /> */}
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">React Express Starter</h1>
+          <h1 className="App-title">GoHelpMe - Empowering the local communities across the world</h1>
         </header>
-        <Customers />
-        <Link to="/dashboard">
-          <button>
-            Text
-          </button>
-        </Link>
+        <
       </div>
     );
   }
