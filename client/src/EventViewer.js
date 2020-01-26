@@ -37,7 +37,7 @@ export default function App2Func({ currentUser }) {
   const classes = useStyles();
   let {id} = useParams();
 
-  const [data, setData] = React.useState({ name: "" });
+  const [data, setData] = React.useState({ name: "", location: { latitude: 0, longitude: 0 } });
   function createData(name, field) {
     return { name, field };
   }
@@ -49,9 +49,9 @@ export default function App2Func({ currentUser }) {
     if (res.success == true) {
       console.log('something messed up')
     }
-    console.log(res.data.data.creator)
-    
+
     setData(res.data.data);
+    console.log(res.data.data)
     let user = {};
     api.getUserByID(res.data.data.creator).then((res) => {
       
@@ -75,7 +75,7 @@ export default function App2Func({ currentUser }) {
           <Grid item xs={12}>
             <Card style={{padding: 20}}>
               <Typography gutterBottom variant="h5" component="h2" >
-                {data.name}
+                { data.name}}
               </Typography>
               <Divider variant="middle" style={{margin: 20}}/>
               <Typography variant="body2" color="textSecondary" component="p" align="left">
@@ -129,8 +129,11 @@ export default function App2Func({ currentUser }) {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper style={{padding: "10%", width: "80%", height: "100px"}}>
-              <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: data.location.latitude, lng: data.location.lng }}/>
+            <Paper style={{padding: "10%", width: "80%"}}>
+              {console.log(currentUser)}
+              { console.log({ lat: data.location.latitude, lng: data.location.longitude })}
+              {/* <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: data.location.latitude, lng: data.location.lng }}/> */}
+              <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: data.location.latitude, lng: data.location.longitude }}/>
             </Paper>
           </Grid>
         </Grid>

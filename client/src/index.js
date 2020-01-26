@@ -14,14 +14,15 @@ class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          user: {},
-          signedIn: false,
+          user: JSON.parse(localStorage.getItem("user")) || {},
+          signedIn: JSON.parse(localStorage.getItem("user")) != null,
         }
       }
     
       signOut = () => {
         this.setState({ signedIn: false });
-        this.setState({ setState: {} });
+        this.setState({ user: {} });
+        localStorage.removeItem('user')
         console.log(this.state.signedIn);
         console.log('sign out');
       }
@@ -29,17 +30,21 @@ class Index extends React.Component {
       signIn = (user) => {
         // Sign in handler
         this.setState({ signedIn: true });
-        this.setState({ user: user });
+        this.setState({ user: user.user });
+        localStorage.setItem("user", JSON.stringify(user.user));
         console.log('sign in');
       }
 
       signUp = (user) => {
         this.setState({ signedIn: true })
         // Sign up with API
-        this.setState({ user: user });
+        this.setState({ user: user.user});
+        localStorage.setItem("user", JSON.stringify(user.user));
+        console.log(this.state.user)
       }
     render() {
-
+    console.log('updated user')
+    console.log(this.state.user)
     return(
         <div className="App">
 
