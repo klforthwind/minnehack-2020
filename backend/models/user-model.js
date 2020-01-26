@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const CoordinateSchema = require('./coordinate-model')
+const EventSchema = require('./event-model')
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema(
@@ -7,7 +9,7 @@ const UserSchema = new Schema(
         password: {type: String, required: true},
         email: {type: String, required: true},
         location: {type: CoordinateSchema, require: true},
-        events: {type: [Event]},
+        events: {type: [EventSchema]},
     },
     { timestamps : true }
 )
