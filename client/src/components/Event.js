@@ -29,7 +29,11 @@ export default function SimpleCard() {
     const bull = <span className={classes.bullet}>•</span>;
     let {id} = useParams();
     console.log(id);
-    api.getEventByID(id);
+    await api.getEventByID(id).then((res) => {
+      if (res.success == true) {
+        console.log('something messed up')
+      }
+    });
     return (
       <Card className={classes.card} variant="outlined">
         <CardContent>
