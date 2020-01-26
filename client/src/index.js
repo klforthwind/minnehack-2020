@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import App2 from './App2';
+import Dashboard from './Dashboard';
 import registerServiceWorker from './registerServiceWorker';
 import { Route, Link, BrowserRouter as Router,Switch } from 'react-router-dom'
 import Event from './EventViewer';
@@ -52,7 +53,7 @@ class Index extends React.Component {
         <Navbar signedIn={this.state.signedIn} signOut={this.signOut} signIn={this.signIn} signUp={this.signUp} />
             <div style={{marginTop: "25px"}}>
                 <Route exact path="/" component={App} />
-                <Route path="/dashboard" component={App2} />
+                <Route path="/dashboard" component={Dashboard} />
                 <Route path="/explore" component={App2} />
                 <Route path="/auth" component={App2} />
                 <Route path="/profile" component={App2} />
