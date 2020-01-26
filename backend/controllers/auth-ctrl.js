@@ -10,10 +10,7 @@ createUser = (req, res) => {
 
     // try and validate a new model
     const user = new UserModel(req.body)
-    user.on("error", () => res.status(400).json({
-        success: false,
-        message: "failed to create user"
-    }))
+    
     user.save()
     .then(() => {
         res.status(200).json({
@@ -48,7 +45,7 @@ getUserByID = async (req, res) => {
     })
 }
 login = (req, res) => {
-    UserModel.findById(req.params.id, (err, user) => {
+    UserModel.findOne({email : req.body.email}, (err, user) => {
         if (err) {
             return res.status(400).json({success: false, err })
         }

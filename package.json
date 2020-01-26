@@ -16,7 +16,10 @@
     "nodemon": "^1.14.6"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "concurrently": "^3.5.1",
-    "express": "^4.16.2"
+    "express": "^4.17.1",
+    "react-google-maps": "^9.4.5",
+    "react-window": "^1.8.5"
   }
 }
