@@ -85,10 +85,13 @@ export default class NewEvent extends React.Component {
   render() {
     const {redirect} = this.state;
 
-    // if(redirect){return <Redirect to="/dashboard" />}
+    if(redirect){return <Redirect to="/dashboard" />}
 //  name, location with getLatLng, long, name, creator uid, date unix timestamp,target_vol_count, info
     return (
-      <div>
+      <Container maxWidth="md">
+        <Typography variant="h5" align="left" >
+          Creating an Event...
+        </Typography>
         <TextField
           autoFocus
           margin="dense"
@@ -119,6 +122,8 @@ export default class NewEvent extends React.Component {
         <PlacesSearch setLatLngName={this.setLatLngName} />
         <form noValidate>
           <TextField
+            display="flex"
+            flexDirection="row"
             id="datetime-local"
             label="Next appointment"
             type="datetime-local"
@@ -129,8 +134,8 @@ export default class NewEvent extends React.Component {
             }}
           />
         </form>
-        <Button onClick={this.handleSubmit} >Submit</Button>
-      </div>
+        <Button style={{margin:"10px"}} variant="contained" color="primary" onClick={this.handleSubmit} >Submit</Button>
+      </Container>
     );
   }
 }

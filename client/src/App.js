@@ -5,6 +5,9 @@ import Customers from './components/customers';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import ReactDOM from 'react-dom';
 import Navbar from './components/Navbar';
+import { Typography } from '@material-ui/core';
+import { Container}  from '@material-ui/core';
+import { Divider } from '@material-ui/core';
 
 
 class App extends Component {
@@ -35,9 +38,17 @@ class App extends Component {
       <div className="App">
         {/* <Navbar signedIn={this.state.signedIn} signOut={this.signOut} signIn={this.signIn} /> */}
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">GoHelpMe - Empowering the local communities across the world</h1>
         </header>
+        <Container maxWidth="sm" style={{padding:"20px"}}>
+          <Typography variant="h5" align="left">
+            About GoHelpMe
+          </Typography>
+          <Divider />
+          <Typography align="left">
+            GoHelpMe is an app for connecting communities together to drive volunteer powered events. It has functionality for finding events to participate in. You are about to view events without an account, and 
+          </Typography>
+        </Container>
       </div>
     );
   }
