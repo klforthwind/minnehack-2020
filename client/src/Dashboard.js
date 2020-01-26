@@ -10,103 +10,138 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import api from '../src/api'
 
 const useStyles = makeStyles(theme => ({ }));
 
-export default function InsetList() {
-    const classes = useStyles();
+export default class InsetList extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            attending: [],
+            a_items: [],
+            hosting: [],
+            h_items: []
+        }
+    }
+
+    async componentDidMount () {
+
+        api.getEventsByCreator(this.props.currentUser._id).then(res => {
+            this.setState({
+                hosting : res.data.data
+            })
+            const items = []
+            for (let i = 0; i < this.state.hosting.length; i++) {
+                let event = this.state.hosting[i]
+                const loc = "/event/"+event._id
+                items.push(
+                    <Link to={loc} style={{ textDecoration: 'none', color:"#000000" }}>
+                        <ListItem button>
+                            <Grid container alignItems="center">
+                                <Grid item xs={9}>
+                                    <Typography align = "left" >
+                                        {`${event.name}`} 
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
+                                        {`${event.date}`}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </ListItem>
+                    </Link>)
+            }
+            this.setState({h_items : items})
+
+        })
+
+        api.getEventsByVolunteer(this.props.currentUser._id).then(res => {
+            this.setState({
+                attending : res.data.data
+            })
+            const items = []
+            for (let i = 0; i < this.state.attending.length; i++) {
+                let event = this.state.attending[i]
+                const loc = "/event/"+event._id
+                items.push(
+                        <Link to={loc} style={{ textDecoration: 'none', color:"#000000" }}>
+                        <ListItem button>
+                            <Grid container alignItems="center">
+                                <Grid item xs={9}>
+                                    <Typography align = "left" >
+                                        {`${event.name}`} 
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
+                                        {`${event.date}`}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </ListItem>
+                    </Link>)
+            }
+            this.setState({a_items : items})
+        })
+
+    }
+
+
+
+
+    render() {
+
+        return (
+            <Container maxWidth = "md">
+                <Grid container direction="row" spacing={2}>
+                    <Grid item xs={6}>
+                        <Card>
+                            <CardHeader 
+                                title = "Attending" 
+                                titleTypographyProps = {{color: "#ffffff"}}
+                                style={{ backgroundColor: "#3F51B5" }}
+                            />
+                            <CardContent>
+                                <List style={{width:"100%"}}>
+                                    <Link to="/explore" style={{ textDecoration: 'none', color:"#000000" }}>
+                                        <ListItem button divider={true}>
+                                            <Typography align = "left">
+                                                Find new events
+                                            </Typography>
+                                        </ListItem>
+                                    </Link>
+                                    {this.state.a_items}
+                                    
+                                </List>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Card>
+                            <CardHeader 
+                                title = "Hosting" 
+                                style={{ backgroundColor: "#3F51B5" }}
+                            />
+                            <CardContent>
+                                <List style={{width:"100%"}}>
+                                    <Link to="/event-creation" style={{ textDecoration: 'none', color:"#000000" }}>
+                                        <ListItem button divider={true}>
+                                            <Typography align = "left" >
+                                                Create new events
+                                            </Typography>
+                                        </ListItem>
+                                    </Link>
+                                    {this.state.h_items}
+                                </List>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </Container>
+        );
+    } 
   
-    return (
-        <Container maxWidth = "md">
-            <Grid container direction="row" spacing={2}>
-                <Grid item xs={6}>
-                    <Card>
-                        <CardHeader 
-                            title = "Attending" 
-                            titleTypographyProps = {{color: "#ffffff"}}
-                            style={{ backgroundColor: "#3F51B5" }}
-                        />
-                        <CardContent>
-                            <List style={{width:"100%"}}>
-                                <Link to="/explore" style={{ textDecoration: 'none', color:"#000000" }}>
-                                    <ListItem button divider={true}>
-                                        <Typography align = "left">
-                                            Find new events
-                                        </Typography>
-                                    </ListItem>
-                                </Link>
-                                <Link to="/event" style={{ textDecoration: 'none', color:"#000000" }}>
-                                    <ListItem button>
-                                        <Grid container alignItems="center">
-                                            <Grid item xs={9}>
-                                                <Typography align = "left" >
-                                                    This is an event 
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={3}>
-                                                <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
-                                                    IN 4 DAYS
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </ListItem>
-                                </Link>
-                                <Link to="/event" style={{ textDecoration: 'none', color:"#000000" }}>
-                                    <ListItem button>
-                                        <Grid container alignItems="center">
-                                            <Grid item xs={9}>
-                                                <Typography align = "left" >
-                                                    This is an event 
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={3}>
-                                                <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
-                                                    IN 4 DAYS
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </ListItem>
-                                </Link>
-                            </List>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={6}>
-                    <Card>
-                        <CardHeader 
-                            title = "Hosting" 
-                            style={{ backgroundColor: "#3F51B5" }}
-                        />
-                        <CardContent>
-                            <List style={{width:"100%"}}>
-                                <Link to="/event-creation" style={{ textDecoration: 'none', color:"#000000" }}>
-                                    <ListItem button divider={true}>
-                                        <Typography align = "left" >
-                                            Create new events
-                                        </Typography>
-                                    </ListItem>
-                                </Link>
-                                <Link to="/event" style={{ textDecoration: 'none', color:"#000000" }}>
-                                    <ListItem button>
-                                        <Grid container alignItems="center">
-                                            <Grid item xs={9}>
-                                                <Typography align = "left" >
-                                                    This is an event 
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={3}>
-                                                <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
-                                                    IN 4 DAYS
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </ListItem>
-                                </Link>
-                            </List>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
-        </Container>
-    );
   }
