@@ -9,6 +9,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({ }));
 
@@ -22,38 +23,50 @@ export default function InsetList() {
                     <Card>
                         <CardHeader 
                             title = "Attending" 
+                            titleTypographyProps = {{color: "#ffffff"}}
                             style={{ backgroundColor: "#3F51B5" }}
                         />
                         <CardContent>
                             <List style={{width:"100%"}}>
-                                <ListItem button>
-                                    <Grid container alignItems="center">
-                                        <Grid item xs={9}>
-                                            <Typography align = "left" >
-                                                This is a lengthy test event
-                                            </Typography>
+                                <Link to="/explore" style={{ textDecoration: 'none', color:"#000000" }}>
+                                    <ListItem button divider={true}>
+                                        <Typography align = "left">
+                                            Find new events
+                                        </Typography>
+                                    </ListItem>
+                                </Link>
+                                <Link to="/event" style={{ textDecoration: 'none', color:"#000000" }}>
+                                    <ListItem button>
+                                        <Grid container alignItems="center">
+                                            <Grid item xs={9}>
+                                                <Typography align = "left" >
+                                                    This is an event 
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
+                                                    IN 4 DAYS
+                                                </Typography>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={3}>
-                                            <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
-                                                IN 4 DAYS
-                                            </Typography>
+                                    </ListItem>
+                                </Link>
+                                <Link to="/event" style={{ textDecoration: 'none', color:"#000000" }}>
+                                    <ListItem button>
+                                        <Grid container alignItems="center">
+                                            <Grid item xs={9}>
+                                                <Typography align = "left" >
+                                                    This is an event 
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
+                                                    IN 4 DAYS
+                                                </Typography>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </ListItem>
-                                <ListItem button>
-                                    <Grid container alignItems="center">
-                                        <Grid item xs={9}>
-                                            <Typography align = "left" >
-                                                This is a test event
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
-                                                IN 7 DAYS
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </ListItem>
+                                    </ListItem>
+                                </Link>
                             </List>
                         </CardContent>
                     </Card>
@@ -66,34 +79,29 @@ export default function InsetList() {
                         />
                         <CardContent>
                             <List style={{width:"100%"}}>
-                                <ListItem button alignItems="right">
-                                    <Grid container alignItems="center">
-                                        <Grid item xs={9}>
-                                            <Typography align = "left" >
-                                                This is a lengthy test event
-                                            </Typography>
+                                <Link to="/event-creation" style={{ textDecoration: 'none', color:"#000000" }}>
+                                    <ListItem button divider={true}>
+                                        <Typography align = "left" >
+                                            Create new events
+                                        </Typography>
+                                    </ListItem>
+                                </Link>
+                                <Link to="/event" style={{ textDecoration: 'none', color:"#000000" }}>
+                                    <ListItem button>
+                                        <Grid container alignItems="center">
+                                            <Grid item xs={9}>
+                                                <Typography align = "left" >
+                                                    This is an event 
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
+                                                    IN 4 DAYS
+                                                </Typography>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={3}>
-                                            <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
-                                                IN 4 DAYS
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </ListItem>
-                                <ListItem button minWidth={300}>
-                                <Grid container alignItems="center">
-                                        <Grid item xs={9}>
-                                            <Typography align = "left" >
-                                                This is a test event
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            <Typography align = "right" variant="caption" noWrap style={{color:"#777777"}}>
-                                                IN 7 DAYS
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </ListItem>
+                                    </ListItem>
+                                </Link>
                             </List>
                         </CardContent>
                     </Card>
