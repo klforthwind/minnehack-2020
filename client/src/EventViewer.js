@@ -18,6 +18,8 @@ import { Route, Link, BrowserRouter as Router, useParams } from 'react-router-do
 import api from './api/index'
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
+import Divider from '@material-ui/core/Divider';
+import Navbar from './components/Navbar';
 const useStyles = makeStyles(theme => ({ }));
 
 function createData(name, field) {
@@ -51,51 +53,24 @@ export default function App2Func() {
 
   return (
     <Container maxWidth="md">
-      <Grid container spacing={4}>
-        <Grid item xs={7}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant = "h4">
+      <Grid container direction="row">
+        <Grid item container direction="column">
+          <Grid item xs={6}>
+            <Card variant="outlined" style={{padding: 20}}>
+              <Typography gutterBottom variant="h3" component="h2" >
                 {data.name}
               </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Box>
-              <Card>
-                <Typography>
-                  {data.info}
-                </Typography>
-              </Card>         
-              </Box>
-
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container spacing={2}>
-                <Grid item xs={5}>
-                  <Button variant="contained" color="primary" fullWidth>
-                    Register
-                  </Button>
-                </Grid>
-                <Grid item xs={7}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <Typography align="center">
-                        1/3
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <LinearProgress variant="determinate" value={3.0} color="primary" />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+              <Divider variant="middle" style={{margin: 20}}/>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {data.info}
+              </Typography>
+            </Card>
           </Grid>
+
         </Grid>
-        <Grid item xs={5}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TableContainer component={ Paper }>
+        <Grid  item container direction="column">
+          <Grid item xs={6}>
+          <TableContainer component={ Paper }>
                 <Table className={ classes.table } size="small" aria-label="simple table">
                   <TableBody>
                     {event_info.map(row => (
@@ -109,10 +84,6 @@ export default function App2Func() {
                   </TableBody>
                 </Table>
               </TableContainer>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper elevation={2}>map</Paper>
-            </Grid>
           </Grid>
         </Grid>
       </Grid>
