@@ -35,9 +35,12 @@ const event_info = [
 export default function App2Func() {
   const classes = useStyles();
   let {id} = useParams();
-  console.log(id);
 
   const [data, setData] = React.useState({ name: "" });
+  function createData(name, field) {
+    return { name, field };
+  }
+  const [eventInfo, setEventInfo] = React.useState([]);
 
   // let data = {name: ""}
   if (data.name == "") {
@@ -45,9 +48,22 @@ export default function App2Func() {
     if (res.success == true) {
       console.log('something messed up')
     }
-    console.log(res.data.data)
+    console.log(res.data.data.creator)
     
     setData(res.data.data);
+    let user = {};
+    api.getUserByID(res.data.data.creator).then((res) => {
+      
+      user = res.data.user
+      console.log(user)
+      setEventInfo([
+        createData('Host', user.name),
+        createData('Location', user.location.name || "Somewhere"),
+        createData('Time', data.date || "Sometime")
+      ]
+      )
+    })
+
   });
   }
 
@@ -55,7 +71,7 @@ export default function App2Func() {
     <Container maxWidth="md">
       <Grid container direction="row" spacing={1}>
         <Grid container item xs={7}>
-          <Grid item >
+          <Grid item xs={12}>
             <Card style={{padding: 20}}>
               <Typography gutterBottom variant="h5" component="h2" >
                 {data.name}
@@ -68,11 +84,11 @@ export default function App2Func() {
           </Grid>
         </Grid>
         <Grid container item xs={5} justify="flex-start">
-          <Grid item>
+          <Grid item xs={12}>
           <TableContainer component={ Paper }>
                 <Table className={ classes.table } size="small" aria-label="simple table">
                   <TableBody>
-                    {event_info.map(row => (
+                    {eventInfo.map(row => (
                       <TableRow key={ row.name }>
                         <TableCell component="th" scope="row">
                           {row.name}
@@ -96,7 +112,7 @@ export default function App2Func() {
                     </Typography>
                   </Grid>
                   <Grid item xs={12}>
-                  <LinearProgress variant="determinate" value={data.current_vol_count/data.target_vol_count} color="primary" />
+                  <LinearProgress variant="determinate" value={data.current_vol_count/data.target_vol_count * 100} color="primary" />
                   </Grid>
                 
                 </Grid>
