@@ -15,6 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
 
 const useStyles = makeStyles(theme => ({
@@ -28,21 +29,6 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
-    },
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
     },
   },
   searchIcon: {
@@ -104,8 +90,8 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem style={{ width: 100 }} onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem style={{ width: 100 }} onClick={handleMenuClose}>Sign Out</MenuItem>
     </Menu>
   );
   
@@ -126,11 +112,13 @@ export default function Navbar() {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Button variant="contained" color="primary">
-                <p>Dashboard</p>
-            </Button>
-            <Button variant="contained" color="primary">
-                <p>Explore</p>
+            <Link to="/2">
+                <Button color="primary">
+                    <p style={{ color: "#FFFFFF" }}>Dashboard</p>
+                </Button>
+            </Link>
+            <Button color="primary">
+                <p style={{ color: "#FFFFFF" }}>Explore</p>
             </Button>
             <IconButton
               edge="end"
