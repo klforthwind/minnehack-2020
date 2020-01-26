@@ -1,14 +1,9 @@
-var express = require('express')
-var router = express.Router()
-
+const express = require('express')
+const AuthRouter = express.Router()
+const AuthCtrl = require('./controllers/auth-ctrl')
 // define the home page route
-router.post('/login', (req, res) => {
-    req.
-    res.send('Birds home page')
-})
+AuthRouter.post('/login', AuthCtrl.login)
 // define the about route
-router.post('/create', (req, res) => {
-    res.send('About birds')
-})
+AuthRouter.post('/create', AuthCtrl.createAccount)
 
-module.exports = router
+module.exports = AuthRouter
