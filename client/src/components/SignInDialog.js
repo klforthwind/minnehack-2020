@@ -41,8 +41,6 @@ const useStyles = makeStyles(theme => ({
   
 export default function SignInDialog({ close }) {
 
-  const [newAccount, setNewAccount] = React.useState(null);
-
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
