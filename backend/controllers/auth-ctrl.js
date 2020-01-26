@@ -48,7 +48,23 @@ getUserByID = async (req, res) => {
     })
 }
 login = (req, res) => {
-    
+    UserModel.findById(req.params.id, (err, user) => {
+        if (err) {
+            return res.status(400).json({success: false, err })
+        }
+        // check password req exist
+        if (!req.body.password) {
+            return res.status(400).json({success: false, message: "no password provided"})
+        }
+        // ok check if password matches the user password
+        if (req.body.password == user.password) {
+            // it matches!!
+            return res.status(200).json({success: true, user})
+        } else {
+            // it fails
+            return res.status(400).json({success: false, message: "incorrect password"})
+        }
+    })
 }
 module.exports = {
     createUser,
