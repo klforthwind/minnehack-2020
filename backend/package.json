@@ -1,0 +1,11 @@
+{
+  "name": "minnehack-backend",
+  "version": "1.0.0",
+  "description": "The backend for the minnehack2020 app",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "",
+  "license": "ISC"
+}
