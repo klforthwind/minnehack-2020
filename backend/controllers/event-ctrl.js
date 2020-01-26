@@ -12,10 +12,6 @@ createEvent = (req, res) => {
 
     const event = new Event(body)
 
-    if (!event) {
-        return res.status(400).json({ success:false, error: err})
-    }
-
     event
         .save()
         .then(() => {
@@ -39,15 +35,15 @@ updateEvent = async (req, res) => {
 
 }
 
-deleteEvent = (req, res) => {
+deleteEvent = async (req, res) => {
 
 }
 
-getEvents = (req, res) => {
+getEvents = async (req, res) => {
 
 }
 
-getEventByID = (req, res) => {
+getEventByID = async (req, res) => {
 
 }
 
