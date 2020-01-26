@@ -20,6 +20,7 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import Navbar from './components/Navbar';
+import MapComponent from './components/MapComponent';
 const useStyles = makeStyles(theme => ({ }));
 
 function createData(name, field) {
@@ -32,7 +33,7 @@ const event_info = [
   createData('Time', '7:00AM  7/9/2019'),
 ];
 
-export default function App2Func() {
+export default function App2Func({ currentUser }) {
   const classes = useStyles();
   let {id} = useParams();
 
@@ -128,7 +129,9 @@ export default function App2Func() {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper style={{padding: "10%", width: "80%", height: "100px"}} />
+            <Paper style={{padding: "10%", width: "80%", height: "100px"}}>
+              <MapComponent userLoc={{ lat: currentUser.location !== undefined ? currentUser.location.latitude : 44, lng: currentUser.location != undefined ? currentUser.location.longitude : -93 }} eventLoc={{ lat: data.location.latitude, lng: data.location.lng }}/>
+            </Paper>
           </Grid>
         </Grid>
       </Grid>
