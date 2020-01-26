@@ -70,7 +70,7 @@ updateEvent = async (req, res) => {
 }
 
 deleteEvent = async (req, res) => {
-    await Event.findOneAndDelete({ id: req.params.id}, (err, event) => {
+    await Event.findOneAndDelete({ _id: req.params.id}, (err, event) => {
         if (err) {
             return res.status(400).json({ success : false, error: err})
         }
@@ -80,7 +80,7 @@ deleteEvent = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: 'Event not found' })
         }
-        return res.status(200).json({ success : true, data : events})
+        return res.status(200).json({ success : true, data : event})
     }).catch(err => console.log(err))
 }
 
@@ -94,7 +94,7 @@ getEvents = async (req, res) => {
 }
 
 getEventByID = async (req, res) => {
-    await Event.findOne({_id : req.params.id}, (err, event) => {
+    await Event.findOne({ _id : req.params.id}, (err, event) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -111,7 +111,7 @@ getEventByID = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getEventsByOwner = async (req, res) => {
+getEventsByCreator = async (req, res) => {
     await Event.find({creator : req.params.creator}, (err, events) => {
         if (err) {
             return res.status(404).json({
@@ -125,7 +125,7 @@ getEventsByOwner = async (req, res) => {
 }
 
 getEventsByVolunteer = async (req, res) => {
-    await Event.find({volunteer : req.params.volunteer}, (err, events) => {
+    await Event.find({volunteers : req.params.volunteer}, (err, events) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -161,6 +161,23 @@ addVolunteerToEvent = async (req, res) => {
                     .json({ success : false, error : "Event not found!"})
         }
         event.volunteers.push(body.volunteer)
+        
+        event
+            .save()
+            .then(() => {
+                return res.status(200).json({
+                    success: true,
+                    _id: Event._id,
+                    message: "Event updated!"
+                })
+            })
+            .catch(error => {
+                return res.status(404).json({
+                    error,
+                    message: 'Event not updated!'
+                })
+            })
+
         return res.status(200).json({ success : true, data: event})
     }).catch(err => console.log(err))
 }
@@ -216,7 +233,7 @@ module.exports = {
     deleteEvent,
     getEvents,
     getEventByID,
-    getEventsByOwner,
+    getEventsByCreator,
     getEventsByVolunteer,
     addVolunteerToEvent,
     removeVolunteerFromEvent
