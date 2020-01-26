@@ -23,9 +23,8 @@ export default class PlacesSearch extends React.Component {
   //   console.log('here');
   // }
 
-  handleTextChange = () => {
-    console.log('here')
-    // console.log(e.target.value)
+  handleTextChange = prop => event => {
+    this.setState({ ...this.state, [prop]: event.target.value });
   }
 
   handleSelect = address => {
@@ -55,7 +54,7 @@ export default class PlacesSearch extends React.Component {
               label="Your Location"
               type="location"
               fullWidth
-              onChange={this.handleTextChange}
+              onChange={this.handleTextChange('name')}
               {...getInputProps({
                 placeholder: 'Search Places ...',
                 className: 'location-search-input',

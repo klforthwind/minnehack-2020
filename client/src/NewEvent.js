@@ -22,12 +22,57 @@ import Divider from '@material-ui/core/Divider';
 import Navbar from './components/Navbar';
 import MapComponent from './components/MapComponent';
 import Axios from 'axios';
+import TextField from '@material-ui/core/TextField';
+import { getLatLng } from 'react-places-autocomplete';
+import PlacesSearch from './components/PlacesSearch';
 
 export default class NewEvent extends React.Component {
 
   state = {
-    redirect: false
+    redirect: false,
+    date: new Date(),
+    name: '',
+    info: '',
+    volunteerNo: 0,
+    locationName: '',
+    lat: 0,
+    lng: 0,
   }
+
+  handleSubmit = () => {
+    let data = this.getData();
+    // Do whatever
+  }
+
+  getData = () => {
+    let data = {
+      date: this.state.date,
+      name: this.state.name,
+      info: this.state.info,
+      target_vol_count: this.state.volunteerNo,
+      location: {
+        latitude: this.state.lat,
+        longitude: this.state.lng,
+        name: this.state.locationName
+      }
+    }
+    console.log(data)
+    return data;
+  }
+
+  handleChange = prop => event => {
+    this.setState({ ...this.state, [prop]: event.target.value });
+    console.log(this.state)
+  };
+
+  setLatLngName = (lat, lng, name) => {
+    this.setState({ ...this.state, lat, lng, name});
+  }
+
+  handleDateChange = (event) => {
+    this.setState({ selectedDate: event.target.value })
+    console.log(event.target.value);
+  } 
 
   componentDidMount() {
       // let data = {name: ""}
@@ -39,8 +84,53 @@ export default class NewEvent extends React.Component {
 
   render() {
     const {redirect} = this.state;
-    if(redirect){return <Redirect to="/dashboard" />}
 
-    return <div />
+    // if(redirect){return <Redirect to="/dashboard" />}
+//  name, location with getLatLng, long, name, creator uid, date unix timestamp,target_vol_count, info
+    return (
+      <div>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="eventName"
+          label="Event Name"
+          type="name"
+          fullWidth
+          onChange={this.handleChange('name')}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="volunteerNo"
+          label="Volunteer Target No."
+          type="volunteerNo"
+          fullWidth
+          onChange={this.handleChange('target_vol_count')}
+          />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="info"
+          label="Details"
+          type="info"
+          fullWidth
+          onChange={this.handleChange('info')}
+          />
+        <PlacesSearch setLatLngName={this.setLatLngName} />
+        <form noValidate>
+          <TextField
+            id="datetime-local"
+            label="Next appointment"
+            type="datetime-local"
+            defaultValue="2017-05-24T10:30"
+            onChange={this.handleChange('date')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </form>
+        <Button onClick={this.handleSubmit} >Submit</Button>
+      </div>
+    );
   }
 }

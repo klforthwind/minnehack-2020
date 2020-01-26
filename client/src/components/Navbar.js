@@ -155,13 +155,15 @@ export default function Navbar({ signedIn, signOut, signIn, signUp }) {
                     <p style={{ color: "#FFFFFF" }}>Dashboard</p>
                 </Button>
             </Link>
-            <Button color="primary">
+            <Link to="/explore">
+              <Button color="primary">
                 <p style={{ color: "#FFFFFF" }}>Explore</p>
                 {/* TODO: WTF */}
                 {/* <div style={makeStyles.searchIcon}>
                     <SearchIcon />
                 </div> */}
-            </Button>
+              </Button>
+            </Link>
             <IconButton
               edge="end"
               aria-label="account of current user"
