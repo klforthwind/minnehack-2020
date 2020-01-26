@@ -7,6 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { Route, Link, BrowserRouter as Router,Switch } from 'react-router-dom'
 import Event from './EventViewer';
 import Navbar from './components/Navbar';
+import NewEvent from './NewEvent'
 
 registerServiceWorker();
 
@@ -57,6 +58,7 @@ class Index extends React.Component {
                 <Route path="/auth" component={App2} />
                 <Route path="/profile" component={App2} />
                 <Route exact path="/event/:id" children={<Event currentUser={this.state.user}/>}/>
+                <Route path="/create" component={() => <NewEvent signedIn={this.state.signedIn}/>} />
             </div>
         </Router>
         </div>
