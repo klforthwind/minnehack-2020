@@ -78,7 +78,7 @@ export default function SignInDialog({ close, signIn }) {
   const getEmailPassword = () => {
     return {
       email: values.email,
-      password: values.password,
+      password: values.password
     }
   }
 
