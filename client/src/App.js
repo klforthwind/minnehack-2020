@@ -46,7 +46,7 @@ class App extends Component {
           </Typography>
           <Divider />
           <Typography align="left">
-            GoHelpMe is an app for connecting communities together to drive volunteer powered events. It has functionality for finding events to participate in. You are about to view events without an account, and 
+            GoHelpMe is an app for connecting communities together to drive volunteer powered events. You are able to browse events, and click on them to view more information. You can subscribe to any you'd like to participate in. You can also create events for others to participate in. Any user can view their attending and hosting events on their dashboard.
           </Typography>
         </Container>
       </div>
