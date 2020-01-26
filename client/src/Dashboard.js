@@ -31,6 +31,7 @@ export default class InsetList extends Component {
 
         if (!this.props.signedIn) {
             this.setState({redirect: true})
+            return;
         }
       
 
