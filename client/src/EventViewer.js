@@ -86,7 +86,7 @@ export default function App2Func({ currentUser }) {
           <Grid item xs={12}>
             <Card style={{padding: 20}}>
               <Typography gutterBottom variant="h5" component="h2" >
-                { Event.name}}
+                {Event.name}
               </Typography>
               <Divider variant="middle" style={{margin: 20}}/>
               <Typography variant="body2" color="textSecondary" component="p" align="left">
