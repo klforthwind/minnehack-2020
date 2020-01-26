@@ -4,12 +4,14 @@ import './App.css';
 import Customers from './components/customers';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import ReactDOM from 'react-dom';
+import Navbar from './components/Navbar';
 
 
 class App extends Component {
   render() {
     return (
       <div className="App">
+        <Navbar />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">React Express Starter</h1>
