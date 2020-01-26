@@ -56,7 +56,7 @@ class Index extends React.Component {
             <div style={{marginTop: "25px"}}>
                 <Route exact path="/" component={App} />
                 <Route path="/explore" component={Explore} />
-                <Route path="/dashboard" component={() => <Dashboard currentUser={this.state.user}/>}/>
+                <Route path="/dashboard" component={() => <Dashboard currentUser={this.state.user} signedIn={this.state.signedIn}/>}/>
                 <Route path="/auth" component={App2} />
                 <Route path="/profile" component={App2} />
                 <Route exact path="/event/:id" children={<Event currentUser={this.state.user}/>}/>

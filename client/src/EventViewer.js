@@ -38,6 +38,8 @@ export default function App2Func({ currentUser }) {
   let {id} = useParams();
 
   const [Event, setEvent] = React.useState({ name: "", location: { latitude: 0, longitude: 0 }, volunteers: ['h'] });
+
+  const [clicked, setClicked] = React.useState(false);
   function createData(name, field) {
     return { name, field };
   }
@@ -51,14 +53,15 @@ export default function App2Func({ currentUser }) {
     }
 
     setEvent(res.data.data);
+    let newData = res.data.data;
     console.log(res.data.data)
     let user = {};
     api.getUserByID(res.data.data.creator).then((res) => {
-      
+      console.log(newData);
       user = res.data.user
       setEventInfo([
         createData('Host', user.name),
-        createData('Location', user.location.name || "Somewhere"),
+        createData('Location', user.location.name || `Lat: ${newData.location.latitude} Lng: ${newData.location.longitude}`),
         createData('Time', Event.date || "Sometime")
       ]
       )
@@ -68,6 +71,7 @@ export default function App2Func({ currentUser }) {
   });
   }
   function applyToEvent() {
+    // setClicked(true);
 
     console.log("hi")
     if (currentUser._id != null) {
@@ -131,7 +135,7 @@ export default function App2Func({ currentUser }) {
                   
               </Grid>
                 <Grid item xs={12}>
-                  <Button fullWidth variant="contained" color="primary" onClick={applyToEvent}>Apply To Event</Button>
+                  <Button disabled={clicked} fullWidth variant="contained" color="primary" onClick={applyToEvent}>Apply To Event</Button>
                 </Grid>
 
               </Grid>

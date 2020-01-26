@@ -36,7 +36,7 @@ class Explore extends Component {
                             <ListItemText style={{paddingLeft:100}} primary={`${event.name}`} />
                             <ListItemText primary={`${event.location.name}`} />
                             <ListItemText primary={`${event.target_vol_count}`} />
-                            <ListItemText primary={`${event.date}`} />
+                            <ListItemText primary={`${new Date(event.date * 1000)}`} />
                             <ListItemText primary={`${res.data.user.name}`} />
                         </ListItem></Link>)
                 })

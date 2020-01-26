@@ -136,7 +136,7 @@ export default class InsetList extends Component {
                             />
                             <CardContent>
                                 <List style={{width:"100%"}}>
-                                    <Link to="/event-creation" style={{ textDecoration: 'none', color:"#000000" }}>
+                                    <Link to="/create" style={{ textDecoration: 'none', color:"#000000" }}>
                                         <ListItem button divider={true}>
                                             <Typography align = "left" >
                                                 Create new events

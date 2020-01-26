@@ -118,9 +118,9 @@ export default function Navbar({ signedIn, signOut, signIn, signUp }) {
     >
       { signedIn ? 
         <div>
-        <Link to="/profile" style={{ textDecoration: 'none', color: '#000000' }}>
+        {/* <Link to="/profile" style={{ textDecoration: 'none', color: '#000000' }}>
           <MenuItem style={{ width: 100 }} onClick={handleMenuClose}>Profile</MenuItem>
-        </Link>
+        </Link> */}
         <MenuItem style={{ width: 100 }} onClick={handleSignOutClick}>Sign Out</MenuItem>
         </div> :
         <div>
