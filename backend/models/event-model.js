@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const EventSchema = new Schema(
     {
         name : {type: String, required: true},
-        location : {type: CoordinateSchema, required: true},
+        location : {type: Number, required: true},
         info : {type: String, required: true},
         id : {type: Number, required: true}
     },

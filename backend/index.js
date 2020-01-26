@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
     res.send("Some friend language")
 })
 
-app.get('/api/auth', authRouter)
-app.get('/api/event', eventRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/event', eventRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
