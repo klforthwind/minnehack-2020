@@ -11,7 +11,7 @@ updateUser = (req, res) => {
 getUsers = (req, res) => {
     
 }
-getUsersByID = (req, res) => {
+getUserByID = (req, res) => {
     
 }
 login = (req, res) => {
