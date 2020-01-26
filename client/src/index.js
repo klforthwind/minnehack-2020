@@ -45,7 +45,7 @@ class Index extends React.Component {
 
         <Router>
         <Navbar signedIn={this.state.signedIn} signOut={this.signOut} signIn={this.signIn} signUp={this.signUp} />
-            <div>
+            <div style={{marginTop: "25px"}}>
                 <Route exact path="/" component={App} />
                 <Route path="/dashboard" component={App2} />
                 <Route path="/explore" component={App2} />
