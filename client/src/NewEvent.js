@@ -15,7 +15,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { Route, Link, BrowserRouter as Router, useParams, Redirect } from 'react-router-dom'
-import api from './api/index'
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
@@ -25,12 +24,14 @@ import Axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import { getLatLng } from 'react-places-autocomplete';
 import PlacesSearch from './components/PlacesSearch';
-
+import api from './api/index'
 export default class NewEvent extends React.Component {
 
   state = {
     redirect: false,
     date: new Date(),
+    done: false,
+    doneEventId:  "",
     name: '',
     info: '',
     volunteerNo: 0,
@@ -41,7 +42,21 @@ export default class NewEvent extends React.Component {
 
   handleSubmit = () => {
     let data = this.getData();
+    // data.date = data.date.getTime()/1000
+    data.date = new Date(data.date).getTime()/1000
+    data.current_vol_count = 0
+    data.creator = this.props.currentUser._id;
     // Do whatever
+    console.log(data)
+    api.createEvent(data).then((res) => {
+      console.log(res)
+      if (res.data.success) {
+       this.setState({done:true, doneEventId: res.data.event._id})
+      }
+    }).catch(function (error) {
+      // handle error
+      console.log(error);
+    })
   }
 
   getData = () => {
@@ -83,9 +98,13 @@ export default class NewEvent extends React.Component {
   }
 
   render() {
-    const {redirect} = this.state;
+    const {redirect, done} = this.state;
 
-    // if(redirect){return <Redirect to="/dashboard" />}
+    if(redirect){return <Redirect to="/dashboard" />}
+    if(redirect){return <Redirect to="/dashboard" />}
+    if (done) {
+      return <Redirect to={`/event/${this.state.doneEventId}`} />
+    }
 //  name, location with getLatLng, long, name, creator uid, date unix timestamp,target_vol_count, info
     return (
       <Container maxWidth="md">
@@ -108,7 +127,7 @@ export default class NewEvent extends React.Component {
           label="Volunteer Target No."
           type="volunteerNo"
           fullWidth
-          onChange={this.handleChange('target_vol_count')}
+          onChange={this.handleChange('volunteerNo')}
           />
         <TextField
           autoFocus
