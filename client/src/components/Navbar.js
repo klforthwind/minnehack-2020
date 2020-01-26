@@ -145,17 +145,21 @@ export default function Navbar({ signedIn, signOut, signIn, signUp }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Volunteer Hack
-          </Typography>
+          <Link to="/" style={{ textDecoration: 'none', textTransform: 'none'}}>
+            <Button color="primary" style={{ textTransform: 'none'}}>
+              <Typography className={classes.title} style={{color:"#FFFFFF"}} variant="h6" noWrap>
+                Volunteer Hack
+              </Typography>
+            </Button>
+          </Link>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/dashboard">
+            <Link to="/dashboard" style={{ textDecoration: 'none', textTransform: 'none'}}>
                 <Button color="primary">
                     <p style={{ color: "#FFFFFF" }}>Dashboard</p>
                 </Button>
             </Link>
-            <Link to="/explore">
+            <Link to="/explore" style={{ textDecoration: 'none', textTransform: 'none'}}>
               <Button color="primary">
                 <p style={{ color: "#FFFFFF" }}>Explore</p>
                 {/* TODO: WTF */}
