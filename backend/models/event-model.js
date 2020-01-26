@@ -11,7 +11,8 @@ const EventSchema = new Schema(
         creator : {type: UserSchema, required:true},
         volunteers : {type: [UserSchema], default: []},
         target_vol_count : {type: Number, required:true},
-        current_vol_count : {type: Number, required:true}
+        current_vol_count : {type: Number, required:true},
+        date : {type: Number, required: true}
     },
     { timestamps : true}
 )
