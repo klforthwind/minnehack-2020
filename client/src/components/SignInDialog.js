@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
   
-export default function SignInDialog({ close }) {
+export default function SignInDialog({ close, signIn }) {
 
   const classes = useStyles();
 
