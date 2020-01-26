@@ -48,7 +48,7 @@ getUserByID = async (req, res) => {
     })
 }
 login = (req, res) => {
-    UserModel.findById(req.params.id, (err, user) => {
+    UserModel.findOne({email : req.body.email}, (err, user) => {
         if (err) {
             return res.status(400).json({success: false, err })
         }
